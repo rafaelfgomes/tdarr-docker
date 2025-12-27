@@ -1,0 +1,48 @@
+services:
+  tdarr:
+    container_name: tdarr
+    image: haveagitgat/tdarr
+    restart: unless-stopped
+    ports:
+      - ${TDARR_WEBUI_PORT:-8265}:8265 # WebUI
+      - ${TDARR_SERVER_PORT:-8266}:8266 # Server port
+    environment:
+      - TZ=${TIMEZONE:-UTC}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - serverIP=0.0.0.0
+      - serverPort=${TDARR_WEBUI_PORT:-8265}
+      - webUIPort=${TDARR_SERVER_PORT:-8266}
+    volumes:
+      - ${TDARR_SERVER_FOLDER:-./server}:/app/server
+      - ${TDARR_CONFIGS_FOLDER:-./configs}:/app/configs
+      - ${TDARR_LOGS_FOLDER:-./logs}:/app/logs
+      - ${TDARR_CACHE_FOLDER:-./temp}:/temp
+      - ${TDARR_MEDIA_FOLDER}:/data/media
+    networks:
+      - net
+
+  node1:
+    container_name: tdarr-node1
+    image: haveagitgat/tdarr_node
+    restart: unless-stopped
+    environment:
+      - TZ=${TIMEZONE:-UTC}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - nodeID=NasNode
+      - serverIP=tdarr
+      - serverPort=8266
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - ${TDARR_CONFIGS_FOLDER:-./configs}:/app/configs
+      - ${TDARR_LOGS_FOLDER:-./logs}:/app/logs
+      - ${TDARR_CACHE_FOLDER:-./temp}:/temp
+      - ${TDARR_MEDIA_FOLDER}:/data/media
+    networks:
+      - net
+
+networks:
+  net:
+    name: tdarr-network
