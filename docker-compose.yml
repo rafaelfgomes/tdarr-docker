@@ -31,8 +31,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - nodeID=NasNode
-      - serverIP=127.0.0.1
-      - serverPort=${TDARR_SERVER_PORT:-8266}:8266
+      - serverIP=tdarr
+      - serverPort=8266
     devices:
       - /dev/dri:/dev/dri
     volumes:
