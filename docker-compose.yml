@@ -11,8 +11,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - serverIP=0.0.0.0
-      - serverPort=${TDARR_WEBUI_PORT:-8265}
-      - webUIPort=${TDARR_SERVER_PORT:-8266}
+      - serverPort=8265
+      - webUIPort=8266
     volumes:
       - ${TDARR_SERVER_FOLDER:-./server}:/app/server
       - ${TDARR_CONFIGS_FOLDER:-./configs}:/app/configs
