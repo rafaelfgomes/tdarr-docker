@@ -10,9 +10,8 @@ services:
       - TZ=${TIMEZONE:-UTC}
       - PUID=${PUID}
       - PGID=${PGID}
-      - serverIP=0.0.0.0
-      - serverPort=8265
-      - webUIPort=8266
+      - serverPort=8266
+      - webUIPort=8265
     volumes:
       - ${TDARR_SERVER_FOLDER:-./server}:/app/server
       - ${TDARR_CONFIGS_FOLDER:-./configs}:/app/configs
